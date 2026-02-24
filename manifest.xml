@@ -3,32 +3,22 @@
   xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
-  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
   xsi:type="MailApp">
 
-  <!-- ═══════════════════════════════════════════
-       IDENTITY
-  ═══════════════════════════════════════════ -->
   <Id>3d7e8f2a-1c4b-4a9e-b6d0-7f8c9a2b3d4e</Id>
   <Version>1.0.0.0</Version>
   <ProviderName>Your Organisation</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-
   <DisplayName DefaultValue="Attachment Extractor"/>
   <Description DefaultValue="Identify, log, and forward all attachments in the selected email."/>
+  <IconUrl DefaultValue="https://adamc202-cpu.github.io/outlook-attachment-extractor/assets/icon-64.png"/>
+  <HighResolutionIconUrl DefaultValue="https://adamc202-cpu.github.io/outlook-attachment-extractor/assets/icon-128.png"/>
+  <SupportUrl DefaultValue="https://adamc202-cpu.github.io/outlook-attachment-extractor/support"/>
 
-  <IconUrl DefaultValue="https://https://github.com/adamc202-cpu/outlook-attachment-extractor/assets/icon-64.png"/>
-  <HighResolutionIconUrl DefaultValue="https://https://github.com/adamc202-cpu/outlook-attachment-extractor/assets/icon-128.png"/>
-  <SupportUrl DefaultValue="https://https://github.com/adamc202-cpu/outlook-attachment-extractor/support"/>
+  <AppDomains>
+    <AppDomain>https://adamc202-cpu.github.io/outlook-attachment-extractor</AppDomain>
+  </AppDomains>
 
-  <!-- ═══════════════════════════════════════════
-       PERMISSIONS  (ReadItem is enough to read attachments)
-  ═══════════════════════════════════════════ -->
-  <Permissions>ReadItem</Permissions>
-
-  <!-- ═══════════════════════════════════════════
-       HOSTS – Outlook only
-  ═══════════════════════════════════════════ -->
   <Hosts>
     <Host Name="Mailbox"/>
   </Hosts>
@@ -39,22 +29,25 @@
     </Sets>
   </Requirements>
 
-  <!-- ═══════════════════════════════════════════
-       FORM SETTINGS (legacy – required by schema)
-  ═══════════════════════════════════════════ -->
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://https://github.com/adamc202-cpu/outlook-attachment-extractor/taskpane.html"/>
+        <SourceLocation DefaultValue="https://adamc202-cpu.github.io/outlook-attachment-extractor/taskpane.html"/>
         <RequestedHeight>450</RequestedHeight>
       </DesktopSettings>
     </Form>
   </FormSettings>
 
-  <!-- ═══════════════════════════════════════════
-       VERSION OVERRIDES  (Modern ribbon button)
-  ═══════════════════════════════════════════ -->
+  <Permissions>ReadItem</Permissions>
+
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+  </Rule>
+
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+
     <Requirements>
       <bt:Sets DefaultMinVersion="1.8">
         <bt:Set Name="Mailbox"/>
@@ -65,10 +58,8 @@
       <Host xsi:type="MailHost">
         <DesktopFormFactor>
 
-          <!-- Function file (not used here – taskpane approach) -->
           <FunctionFile resid="FunctionFile.Url"/>
 
-          <!-- ── READ MESSAGE ──────────────────────────── -->
           <ExtensionPoint xsi:type="MessageReadCommandSurface">
             <OfficeTab id="TabDefault">
               <Group id="AttachGroup">
@@ -79,7 +70,6 @@
                   <bt:Image size="80" resid="Icon.80x80"/>
                 </Icon>
 
-                <!-- PRIMARY BUTTON -->
                 <Control xsi:type="Button" id="ExtractAttachmentsBtn">
                   <Label resid="Button.Label"/>
                   <Supertip>
@@ -105,22 +95,21 @@
       </Host>
     </Hosts>
 
-    <!-- ── RESOURCES ──────────────────────────────────── -->
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://https://github.com/adamc202-cpu/outlook-attachment-extractor/assets/icon-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://https://github.com/adamc202-cpu/outlook-attachment-extractor/assets/icon-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://https://github.com/adamc202-cpu/outlook-attachment-extractor/assets/icon-80.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://adamc202-cpu.github.io/outlook-attachment-extractor/assets/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://adamc202-cpu.github.io/outlook-attachment-extractor/assets/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://adamc202-cpu.github.io/outlook-attachment-extractor/assets/icon-80.png"/>
       </bt:Images>
 
       <bt:Urls>
-        <bt:Url id="FunctionFile.Url"  DefaultValue="https://https://github.com/adamc202-cpu/outlook-attachment-extractor/function-file.html"/>
-        <bt:Url id="Taskpane.Url"      DefaultValue="https://https://github.com/adamc202-cpu/outlook-attachment-extractor/taskpane.html"/>
+        <bt:Url id="FunctionFile.Url" DefaultValue="https://adamc202-cpu.github.io/outlook-attachment-extractor/taskpane.html"/>
+        <bt:Url id="Taskpane.Url"     DefaultValue="https://adamc202-cpu.github.io/outlook-attachment-extractor/taskpane.html"/>
       </bt:Urls>
 
       <bt:ShortStrings>
-        <bt:String id="Group.Label"   DefaultValue="Attachments"/>
-        <bt:String id="Button.Label"  DefaultValue="Extract Attachments"/>
+        <bt:String id="Group.Label"  DefaultValue="Attachments"/>
+        <bt:String id="Button.Label" DefaultValue="Extract Attachments"/>
       </bt:ShortStrings>
 
       <bt:LongStrings>
